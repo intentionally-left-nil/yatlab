@@ -57,3 +57,6 @@ typings/
 # dotenv environment variables file
 .env
 
+# Dev output files
+lib/yatlab.js
+lib/yatlab.js.map
