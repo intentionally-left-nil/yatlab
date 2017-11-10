@@ -10,14 +10,16 @@ const addEvents = ({rtm, web, botWeb}) => {
   });
 
   rtm.on(RTM_EVENTS.MESSAGE, (message) => {
-    parseMessage({botWeb, message});
+    if (message.user !== botUser) {
+      parseMessage({botWeb, message});
+    }
   });
 
   rtm.on(RTM_EVENTS.REACTION_ADDED, (message) => {
-    if (message.item.type === 'message' && message.user === botUser) {
-      console.log('reaction by myself');
-    } else {
-      handleReactionAdded({web, botWeb, message});
+    if (message.item.type === 'message') {
+      if (message.user !== botUser) {
+        handleReactionAdded({web, botWeb, message});
+      }
     }
   });
 };
