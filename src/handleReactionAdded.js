@@ -1,8 +1,8 @@
 import { getAcronyms } from './acronyms';
 
-const sendAcronym = ({rtm, dmId, acronym}) => {
+const sendAcronym = ({botWeb, dmId, acronym}) => {
   const message = `${acronym.acronym} stands for ${acronym.definition}`;
-  rtm.sendMessage(message, dmId).then(response => console.log('yay', response));
+  botWeb.chat.postMessage(dmId, message, { as_user: false });
 };
 
 const getMessageAcronyms = ({web, channel, ts}) => {
@@ -17,16 +17,16 @@ const getMessageAcronyms = ({web, channel, ts}) => {
   });
 };
 
-const handleReactionAdded = ({web, rtm, message}) => {
+const handleReactionAdded = ({web, botWeb, message}) => {
   const {channel, ts} = message.item;
   let acronyms, dmId;
   getMessageAcronyms({web, channel, ts})
     .then((a) => (acronyms = a))
-    .then(() => web.im.open(message.user))
+    .then(() => botWeb.im.open(message.user))
     .then((response) => (dmId = response.channel.id))
     .then(() => {
       for (let acronym of acronyms) {
-        sendAcronym({rtm, dmId, acronym});
+        sendAcronym({botWeb, dmId, acronym});
       }
     });
 };
