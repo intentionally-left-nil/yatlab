@@ -1,7 +1,17 @@
 import { getAcronyms } from './acronyms';
 
 const sendAcronym = ({botWeb, dmId, acronym}) => {
-  const message = `${acronym.acronym} stands for ${acronym.definition}`;
+  const { description, definition } = acronym;
+  let message;
+  if (definition) {
+    message = `${acronym.acronym} stands for ${definition}.`;
+  } else {
+    message = `${acronym.acronym}: `;
+  }
+
+  if (description) {
+    message += description;
+  }
   botWeb.chat.postMessage(dmId, message, { as_user: false });
 };
 

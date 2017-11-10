@@ -1,0 +1,86 @@
+{
+  "WIG": {
+    "definition": "Wildly Important Goal",
+    "description": "A set of strategic priorities allows an organization to focus energy and resources around the projects that create the greatest impact. See https://avvojira.atlassian.net/wiki/spaces/AAV/pages/127729777/WIGs+and+sWIGs"
+  },
+  "sWIG": {
+    "definition": "Sub-Wildly Important Goal",
+    "description": "Small chunks to get the Wildly Important Goal done"
+  },
+  "SERP": {
+    "definition": "Search Engine Results Page",
+    "description": ""
+  },
+  "NPS": {
+    "definition": "Net Promoter Score",
+    "description": ""
+  },
+  "SLT": {
+    "definition": "Senior Leadership Team",
+    "description": ""
+  },
+  "GSD": {
+    "definition": "Get Sh*t done",
+    "description": ""
+  },
+  "DUHB": {
+    "definition": "Data, Understanding, Hypothesis, Test",
+    "description": "The model for which we make decisions. Start with the data, and use that to lead into hypothesis"
+  },
+  "CTA": {
+    "definition": "Call to Action",
+    "description": "Usually a button - Something we want the user to physically do on a page"
+  },
+  "CPC": {
+    "definition": "Cost Per Click",
+    "description": ""
+  },
+  "CTR": {
+    "definition": "Click Through Rate",
+    "description": ""
+  },
+  "ACV": {
+    "definition": "Ad Contact Value",
+    "description": ""
+  },
+  "Banana Stand": {
+    "definition": "",
+    "description": "Sales tool for querying inventory, managing customers, and building quotes"
+  },
+  "Billboard": {
+    "definition": "",
+    "description": "Ad rendering service"
+  },
+  "Ledger": {
+    "definition": "",
+    "description": "Write-once billing service"
+  },
+  "MPR": {
+    "definition": "Monthly Revenue Report",
+    "description": "Predicts our monthly revenue from ads"
+  },
+  "NRT": {
+    "definition": "Near Realtime Data",
+    "description": ""
+  },
+  "PPC": {
+    "definition": "Pay Per Click",
+    "description": ""
+  },
+  "Quasi": {
+    "definition": "Quotes, Ads, Subscription, Inventory service",
+    "description": ""
+  },
+  "Remnant Ads": {
+    "definition": "",
+    "description": "Ad slots that can be sold when existing ad value is met"
+  },
+  "Soca": {
+    "definition": "",
+    "description": "Sales checkout frontend application"
+  },
+  "TPS": {
+    "definition": "Tomahawk Pricing System",
+    "description": "Uses analytics to intelligently generate pricing"
+  }
+}
