@@ -7,6 +7,7 @@
     "node": "8.9.X"
   },
   "scripts": {
+    "postinstall": "npm run build",
     "build": "babel src --out-dir lib",
     "start": "node lib/index.js --start"
   },
@@ -34,6 +35,5 @@
   "devDependencies": {
     "eslint": "^4.10.0",
     "eslint-loader": "1.9.0"
-  },
-  "postinstall": "npm run build"
+  }
 }
