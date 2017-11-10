@@ -1,8 +1,10 @@
 import { getAcronyms } from './acronyms';
 
-const parseMessage = (message) => {
+const parseMessage = ({web, message}) => {
   const acronyms = getAcronyms(message.text);
-  console.log(acronyms);
+  if (acronyms.length) {
+    console.log(web.reactions.add('question', { channel: message.channel, timestamp: message.ts}));
+  }
 };
 
 export { parseMessage };
