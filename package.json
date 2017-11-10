@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "Yet Another Three Letter Acronym Bot",
   "main": "lib/index.js",
+  "engines": {
+    "node": "8.9.X"
+  },
   "scripts": {
     "build": "babel src --out-dir lib",
     "start": "node lib/index.js --start"
