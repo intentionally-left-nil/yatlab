@@ -82,5 +82,9 @@
   "TPS": {
     "definition": "Tomahawk Pricing System",
     "description": "Uses analytics to intelligently generate pricing"
+  },
+  "APL": {
+    "definition": "AvvoProLite",
+    "description": "Win-back product to replace free AvvoPro"
   }
 }
