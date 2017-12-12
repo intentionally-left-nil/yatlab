@@ -86,5 +86,9 @@
   "APL": {
     "definition": "AvvoProLite",
     "description": "Win-back product to replace free AvvoPro"
+  },
+  "yatlab": {
+    "definition": "Yet Another Three Letter Acronym bot",
+    "description": "https://github.com/AnilRedshift/yatlab"
   }
 }
