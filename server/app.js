@@ -29,7 +29,6 @@ app.use(morgan('combined'));
 
 app.use('/', index);
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
-app.use('/api', api);
 // Always return the main index.html, so react-router render the route in the client
 app.use('/', universalLoader);
 
