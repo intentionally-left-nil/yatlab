@@ -7,8 +7,15 @@ router.use((req, res, next) => {
   next()
 });
 
+router.get('/authorized', (req, res, next) => {
+   const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+   console.log(fullUrl);
+  res.json({})
+});
+
 router.get('/', (req, res, next) => {
   res.json({})
 });
+
 
 module.exports = router;

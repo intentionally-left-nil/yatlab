@@ -2,11 +2,9 @@ const path = require('path')
 const fs = require('fs')
 
 const React = require('react')
-const {Provider} = require('react-redux')
 const {renderToString} = require('react-dom/server')
 const {StaticRouter} = require('react-router-dom')
 
-const {default: configureStore} = require('../src/store')
 const {default: App} = require('../src/containers/App')
 
 module.exports = function universalLoader(req, res) {
@@ -18,16 +16,13 @@ module.exports = function universalLoader(req, res) {
       return res.status(404).end()
     }
     const context = {}
-    const store = configureStore()
     const markup = renderToString(
-      <Provider store={store}>
-        <StaticRouter
-          location={req.url}
-          context={context}
-        >
-          <App/>
-        </StaticRouter>
-      </Provider>
+      <StaticRouter
+        location={req.url}
+        context={context}
+      >
+        <App/>
+      </StaticRouter>
     )
 
     if (context.url) {
@@ -40,4 +35,3 @@ module.exports = function universalLoader(req, res) {
     }
   })
 }
-

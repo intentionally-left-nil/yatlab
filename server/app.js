@@ -27,6 +27,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Setup logger
 app.use(morgan('combined'));
 
+app.use('/api', api);
 app.use('/', index);
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
 // Always return the main index.html, so react-router render the route in the client
