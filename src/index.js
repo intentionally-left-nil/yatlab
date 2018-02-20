@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import './index.css';
 import App from './containers/App';
-// import registerServiceWorker from './registerServiceWorker';
+import { unregister } from './registerServiceWorker';
 
 const content = (
   <BrowserRouter>
@@ -12,4 +12,4 @@ const content = (
   </BrowserRouter>
 );
 ReactDOM.render(content, document.getElementById('root'));
-// registerServiceWorker();
+unregister();
