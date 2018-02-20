@@ -1,44 +1,43 @@
-import { apiUrl } from './config'
+import { apiUrl } from './config';
 
 class Api {
-  constructor(options){
-    this.apiUrl = apiUrl
-    this.prefix = ''
-    if (!options){
-      return
+  constructor(options) {
+    this.apiUrl = apiUrl;
+    this.prefix = '';
+    if (!options) {
+      return;
     }
-    const {token} = options
-    this.token = token
+    const { token } = options;
+    this.token = token;
   }
-  getJsonHeaders(){
+  getJsonHeaders() {
     return {
-      'Accept': 'application/json'
-    }
+      Accept: 'application/json',
+    };
   }
-  postJsonHeaders(){
+  postJsonHeaders() {
     return {
-      'Accept': 'application/json'
-    , 'Content-Type': 'application/json'
-    }
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
   }
-  setToken(token){
-    this.token = token
+  setToken(token) {
+    this.token = token;
   }
-  handleUnauthed(res){
+  handleUnauthed(res) {
     if (res.status === 401) {
-      return new Promise(()=>{})
-    } else {
-      return res
+      return new Promise(() => {});
     }
+    return res;
   }
-  _buildQueryString(data){
-    return '?' + Object.keys(data).map(d=>d+'='+encodeURIComponent(data[d]))
+  _buildQueryString(data) {
+    return `?${Object.keys(data).map(d => `${d}=${encodeURIComponent(data[d])}`)}`;
   }
 }
 
-export class MainApi extends Api{
-  constructor(options){
-    super(options)
-    this.prefix = '/api'
+export class MainApi extends Api {
+  constructor(options) {
+    super(options);
+    this.prefix = '/api';
   }
 }
