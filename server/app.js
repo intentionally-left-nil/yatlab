@@ -4,6 +4,7 @@ const compression = require('compression');
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
+const cookiesMiddleware = require('universal-cookie-express');
 
 require('babel-register')({
   ignore: /\/(build|node_modules)\//,
@@ -26,6 +27,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Setup logger
 app.use(morgan('combined'));
+
+// Setup cookies
+app.use(cookiesMiddleware());
 
 app.use('/api', api);
 app.use('/', index);

@@ -1,5 +1,6 @@
-const path = require('path')
-const fs = require('fs')
+const path = require('path');
+const fs = require('fs');
+const CookiesProvider = require('react-cookie').CookiesProvider;
 
 const React = require('react')
 const {renderToString} = require('react-dom/server')
@@ -21,7 +22,9 @@ module.exports = function universalLoader(req, res) {
         location={req.url}
         context={context}
       >
-        <App/>
+        <CookiesProvider cookies={req.universalCookies}>
+          <App />
+        </CookiesProvider>
       </StaticRouter>
     )
 

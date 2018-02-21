@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
+import { instanceOf } from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
+import { withCookies, Cookies } from 'react-cookie';
 import FirstPage from './FirstPage';
 import SecondPage from './SecondPage';
 import OauthAuthorize from './OauthAuthorize';
 import NoMatch from '../components/NoMatch';
 
-export default class App extends Component {
+class App extends Component {
   render() {
+    const loggedIn = this.props.cookies.get('Authorization');
     return (
       <div>
+        {`logged in: ${loggedIn}`}
         <h1>Server Side Rendering with Create React App v2</h1>
         <p>Hey, so I've rewritten this example with react-router v4</p>
         <p>This code is on github: <a href="https://github.com/ayroblu/ssr-create-react-app-v2">https://github.com/ayroblu/ssr-create-react-app-v2</a></p>
@@ -23,3 +27,9 @@ export default class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  cookies: instanceOf(Cookies).isRequired,
+};
+
+export default withCookies(App);
