@@ -7,7 +7,7 @@ const SignIn = () => {
   const params = {
     client_id: process.env.CLIENT_ID,
     scope: 'identity.basic',
-    redirect_uri: `${process.env.URL_BASE}/api/sign_in`,
+    redirect_uri: `${process.env.URL_BASE}/api/sign-in`,
   };
 
   const href = `https://slack.com/oauth/authorize?${stringify(params)}`;

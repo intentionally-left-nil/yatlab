@@ -11,7 +11,7 @@ router.use((req, res, next) => {
   next()
 });
 
-router.get('/sign_in', signIn);
+router.get('/sign-in', signIn);
 
 router.get('/authorized', (req, res, next) => {
 

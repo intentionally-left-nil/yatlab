@@ -6,7 +6,7 @@ const getAccessToken = (code) => {
   const params = {
     client_id: process.env.CLIENT_ID,
     client_secret: process.env.CLIENT_SECRET,
-    redirect_uri: `${process.env.URL_BASE}/api/sign_in`,
+    redirect_uri: `${process.env.URL_BASE}/api/sign-in`,
     code,
   };
   const href = `https://slack.com/api/oauth.access?${stringify(params)}`;
