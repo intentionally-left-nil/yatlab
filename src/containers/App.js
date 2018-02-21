@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import { withCookies, Cookies } from 'react-cookie';
 import FirstPage from './FirstPage';
 import SecondPage from './SecondPage';
-import OauthAuthorize from './OauthAuthorize';
+import AddTeam from './AddTeam';
 import Header from '../components/Header';
 import NoMatch from '../components/NoMatch';
 import { getUser } from '../helpers/authentication';
@@ -22,7 +22,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={FirstPage} />
           <Route path="/second" component={SecondPage} />
-          <Route path="/authorize" component={OauthAuthorize} />
+          <Route path="/add-team" component={AddTeam} />
           <Route component={NoMatch} />
         </Switch>
       </div>
