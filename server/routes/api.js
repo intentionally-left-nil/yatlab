@@ -1,9 +1,10 @@
 const express = require('express');
-const { Client } = require('pg')
-const router = express.Router();
+const { Client } = require('pg');
 const { signIn } = require('./sign_in_controller');
+const { addTeam } = require('./team_controller');
 
 const client = new Client();
+const router = express.Router();
 
 router.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*")
@@ -12,17 +13,6 @@ router.use((req, res, next) => {
 });
 
 router.get('/sign-in', signIn);
-
-router.get('/authorized', (req, res, next) => {
-
-   const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-   console.log(fullUrl);
-  res.json({})
-});
-
-router.get('/', (req, res, next) => {
-  res.json({})
-});
-
+router.get('/add-team', addTeam);
 
 module.exports = router;
