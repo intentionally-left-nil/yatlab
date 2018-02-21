@@ -7,6 +7,14 @@ router.use((req, res, next) => {
   next()
 });
 
+
+router.get('/sign_in', (req, res, next) => {
+   const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+   console.log('sign in!!');
+   console.log(fullUrl);
+  res.json({})
+});
+
 router.get('/authorized', (req, res, next) => {
    const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
    console.log(fullUrl);

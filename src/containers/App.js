@@ -5,6 +5,7 @@ import { withCookies, Cookies } from 'react-cookie';
 import FirstPage from './FirstPage';
 import SecondPage from './SecondPage';
 import OauthAuthorize from './OauthAuthorize';
+import Header from '../components/Header';
 import NoMatch from '../components/NoMatch';
 
 class App extends Component {
@@ -12,6 +13,7 @@ class App extends Component {
     const loggedIn = this.props.cookies.get('Authorization');
     return (
       <div>
+        <Header />
         {`logged in: ${loggedIn}`}
         <h1>Server Side Rendering with Create React App v2</h1>
         <p>Hey, so I've rewritten this example with react-router v4</p>
