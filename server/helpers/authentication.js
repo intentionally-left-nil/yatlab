@@ -7,8 +7,8 @@ const generateToken = (data) => {
   return token
 };
 
-const setUser = (response, {id, name}) => {
-  const token = generateToken({sub: id, name});
+const setUser = (response, {id, name, team}) => {
+  const token = generateToken({sub: id, name, team});
   const value = `Bearer ${token}`;
   const prod = !!process.env.NODE_ENV === 'production';
   const maxAge = twoWeeksInSeconds * 1000;
