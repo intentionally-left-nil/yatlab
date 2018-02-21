@@ -5,11 +5,12 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1",
-    "eslint": "^4.18.0",
+    "eslint": "^4.18.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
+    "node-pg-migrate": "^2.23.0",
     "react-scripts": "1.1.1"
   },
   "dependencies": {
@@ -23,6 +24,7 @@
     "jsonwebtoken": "^8.1.1",
     "morgan": "^1.9.0",
     "node-fetch": "^2.0.0",
+    "pg": "^7.4.1",
     "prop-types": "^15.6.0",
     "querystring": "^0.2.0",
     "react": "^16.2.0",
@@ -37,6 +39,7 @@
     "now-start": "NODE_ENV=production node server/index.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "db:create": "./scripts/create_db.sh"
   }
 }
