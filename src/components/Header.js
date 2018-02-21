@@ -21,7 +21,7 @@ class Header extends PureComponent {
     return (
       <div id="header">
         {
-          this.props.user ? <UserBadge /> : <SignIn />
+          this.props.user ? <UserBadge user={this.props.user} /> : <SignIn />
         }
       </div>
     );
