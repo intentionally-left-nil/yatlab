@@ -41,6 +41,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "db:create": "./scripts/create_db.sh"
+    "db:create": "./scripts/create_db.sh",
+    "db:migrate": "yarn run node-pg-migrate up"
   }
 }
