@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { hydrate } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { CookiesProvider } from 'react-cookie';
 
@@ -14,5 +14,5 @@ const content = (
     </CookiesProvider>
   </BrowserRouter>
 );
-ReactDOM.render(content, document.getElementById('root'));
+hydrate(content, document.getElementById('root'));
 unregister();
