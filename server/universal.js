@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const CookiesProvider = require('react-cookie').CookiesProvider;
+const serialize = require('serialize-javascript');
 
 const React = require('react')
 const {renderToString} = require('react-dom/server')
@@ -8,14 +9,21 @@ const {StaticRouter} = require('react-router-dom')
 
 const {default: App} = require('../src/containers/App')
 
+const addInitialState = (state, html) => {
+  const script = `<script>window.__PRELOADED_STATE__ = ${serialize(state, {isJSON: true})}</script>`;
+  return html.replace('{{SSR_PRELOADED_STATE}}', script);
+};
+
 module.exports = function universalLoader(req, res) {
   const filePath = path.resolve(__dirname, '..', 'build', 'index.html')
 
-  fs.readFile(filePath, 'utf8', (err, htmlData)=>{
+  fs.readFile(filePath, 'utf8', (err, html)=>{
     if (err) {
       console.error('read err', err)
       return res.status(404).end()
     }
+    const initialState = { magicNumber: 42 };
+
     const context = {}
     const markup = renderToString(
       <StaticRouter
@@ -23,7 +31,7 @@ module.exports = function universalLoader(req, res) {
         context={context}
       >
         <CookiesProvider cookies={req.universalCookies}>
-          <App />
+          <App {...initialState} />
         </CookiesProvider>
       </StaticRouter>
     )
@@ -33,8 +41,9 @@ module.exports = function universalLoader(req, res) {
       res.redirect(301, context.url)
     } else {
       // we're good, send the response
-      const RenderedApp = htmlData.replace('{{SSR}}', markup)
-      res.send(RenderedApp)
+      html = html.replace('{{SSR}}', markup);
+      html = addInitialState(initialState, html);
+      res.send(html);
     }
   })
 }

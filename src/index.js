@@ -7,10 +7,12 @@ import './index.css';
 import App from './containers/App';
 import { unregister } from './registerServiceWorker';
 
+// eslint-disable-next-line no-underscore-dangle
+const initialState = window.__PRELOADED_STATE__;
 const content = (
   <BrowserRouter>
     <CookiesProvider>
-      <App />
+      <App {...initialState} />
     </CookiesProvider>
   </BrowserRouter>
 );
