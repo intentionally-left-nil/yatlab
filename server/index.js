@@ -1,9 +1,14 @@
 require('dotenv').config();
+
+require('babel-register')({
+  ignore: /\/(build|node_modules)\//,
+  presets: ['env', 'react-app']
+});
+
 const app = require('./app');
 
 const PORT = process.env.PORT || 3000;
 
-// Why don't I need http createServer
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}!`)
 });

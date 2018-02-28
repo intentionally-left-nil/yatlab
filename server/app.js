@@ -6,11 +6,6 @@ const morgan = require('morgan');
 const path = require('path');
 const cookiesMiddleware = require('universal-cookie-express');
 
-require('babel-register')({
-  ignore: /\/(build|node_modules)\//,
-  presets: ['env', 'react-app']
-});
-
 // routes
 const index = require('./routes/index');
 const api = require('./routes/api');
