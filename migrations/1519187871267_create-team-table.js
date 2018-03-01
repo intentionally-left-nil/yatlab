@@ -16,5 +16,5 @@ exports.up = (pgm) => {
 };
 
 exports.down = (pgm) => {
-  pgm.dropTable('teams');
+  pgm.dropTable('teams', {cascade: true});
 };
