@@ -40,8 +40,6 @@ jobs:
           paths:
             - node_modules
 
-      - run: echo "hello tests"
-
   deploy:
     <<: *defaults
     docker:
