@@ -1,6 +1,7 @@
 const stringify = require('querystring').stringify;
 const { getAccessToken, setUser } = require('../helpers/authentication');
 const db = require('../helpers/db');
+const jsonRespond = require('../helpers/jsonRespond');
 
 // Example response from Slack
 // access_token: 'xoxp-ACCESS-TOKEN',
@@ -30,10 +31,10 @@ const handleFailure = (res, error = "Unknown") => {
   res.redirect(`/?${stringify({error})}`);
 };
 
-const addTeam = (req, res, next) => {
+const create = (req, res, next) => {
   const code = req.query.code;
   if (code) {
-    getAccessToken({code, subRoute: 'add-team'})
+    getAccessToken({code, subRoute: 'teams/create'})
       .then(saveTeam)
       .then((response) => {
         res.redirect('/');
@@ -44,6 +45,14 @@ const addTeam = (req, res, next) => {
   }
 };
 
+const show = (req, res, next) => {
+  const id = req.params.id;
+  db.one('SELECT name from teams WHERE id = ${id}', {id})
+    .then(name => jsonRespond(res, {id, name}))
+    .catch(error => jsonRespond(res, {error}));
+};
+
 module.exports = {
-  addTeam,
+  create,
+  show,
 };

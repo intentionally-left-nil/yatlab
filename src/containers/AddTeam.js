@@ -5,7 +5,7 @@ export default (() => {
   const params = {
     client_id: process.env.CLIENT_ID,
     scope: 'bot channels:history chat:write:bot groups:history',
-    redirect_uri: `${process.env.URL_BASE}/api/add-team`,
+    redirect_uri: `${process.env.URL_BASE}/api/teams/create`,
   };
   const href = `https://slack.com/oauth/authorize?${stringify(params)}`;
   return (
