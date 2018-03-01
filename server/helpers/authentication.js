@@ -41,7 +41,11 @@ const getUser = (cookies) => {
   let user = null;
   if (auth && auth.startsWith('Bearer ')) {
     const token = auth.slice('Bearer '.length);
-    user = jwt.verify(token, process.env.JWT_SECRET);
+    try {
+      user = jwt.verify(token, process.env.JWT_SECRET);
+    } catch(e) {
+      user = null;
+    }
   }
   return user;
 };

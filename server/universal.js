@@ -4,10 +4,11 @@ const CookiesProvider = require('react-cookie').CookiesProvider;
 const serialize = require('serialize-javascript');
 
 const React = require('react')
-const {renderToString} = require('react-dom/server')
-const {StaticRouter} = require('react-router-dom')
+const {renderToString} = require('react-dom/server');
+const {StaticRouter} = require('react-router-dom');
+const getInitialState = require('./getInitialState');
 
-const {default: App} = require('../src/containers/App')
+const {default: App} = require('../src/containers/App');
 
 const addInitialState = (state, html) => {
   const script = `<script>window.__PRELOADED_STATE__ = ${serialize(state, {isJSON: true})}</script>`;
@@ -22,7 +23,7 @@ module.exports = function universalLoader(req, res) {
       console.error('read err', err)
       return res.status(404).end()
     }
-    const initialState = {};
+    const initialState = getInitialState(req.universalCookies);
 
     const context = {}
     const markup = renderToString(
