@@ -49,16 +49,17 @@ jobs:
       - attach_workspace:
           at: ~/yatlab
       - run: docker build -t yatlab:latest .
-      - run: |
-        if [ "${CIRCLE_BRANCH}" == "circleci" ]; then
-          docker login --username ${DOCKER_USER} --password ${DOCKER_PASSWORD}
 
-          docker tag app "anilredshift/yatlab:${CIRCLE_SHA1}"
-          docker push "anilredshift/yatlab:${CIRCLE_SHA1}"
+      - command: |
+          if [ "${CIRCLE_BRANCH}" == "circleci" ]; then
+            docker login --username ${DOCKER_USER} --password ${DOCKER_PASSWORD}
 
-          docker tag app "anilredshift/yatlab:latest"
-          docker push "anilredshift/yatlab:latest"
-        fi
+            docker tag app "anilredshift/yatlab:${CIRCLE_SHA1}"
+            docker push "anilredshift/yatlab:${CIRCLE_SHA1}"
+
+            docker tag app "anilredshift/yatlab:latest"
+            docker push "anilredshift/yatlab:latest"
+          fi
 
 workflows:
   version: 2
