@@ -24,6 +24,7 @@ jobs:
           key: dependency-cache-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
+
   test:
     <<: *defaults
     steps:
@@ -31,7 +32,7 @@ jobs:
       - restore_cache:
           key: dependency-cache-{{ checksum "yarn.lock" }}
 
-      - test: yarn test
+      - run: yarn test
 
       - save_cache:
           key: dependency-cache-{{ checksum "yarn.lock" }}
@@ -50,8 +51,6 @@ workflows:
   build_test_deploy:
     jobs:
       - build
-      - test
       - deploy:
           requires:
             - build
-            - test
