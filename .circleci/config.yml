@@ -50,10 +50,11 @@ jobs:
           at: ~/yatlab
       - setup_remote_docker:
           docker_layer_caching: true
-      - run: docker build -t anilredshift/yatlab:latest .
+      - run: docker build -t app .
 
       - run: docker login --username "${DOCKER_USERNAME}" --password "${DOCKER_PASSWORD}"
-      - run: docker tag anilredshift/yatlab:latest "anilredshift/yatlab:${CIRCLE_SHA1}"
+      - run: docker tag app "anilredshift/yatlab:${CIRCLE_SHA1}"
+      - run: docker tag app "anilredshift/yatlab:${CIRCLE_SHA1}"
       - run: docker push "anilredshift/yatlab:${CIRCLE_SHA1}"
       - run: docker push "anilredshift/yatlab:latest"
 
@@ -70,4 +71,4 @@ workflows:
             - test
           filters:
             branches:
-              only: circleci
+              only: master
