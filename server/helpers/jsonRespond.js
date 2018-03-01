@@ -10,6 +10,7 @@ const respond = (res, payload, status) => {
 
   payload.ok = status === 200;
 
+  console.debug('JSON API:', JSON.stringify(payload));
   res.status(status);
   res.send(JSON.stringify(payload));
 };

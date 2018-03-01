@@ -12,5 +12,5 @@ RUN yarn install
 # Copy over the remaining files
 COPY . .
 
-EXPOSE 8080
+EXPOSE 3000
 CMD [ "yarn", "server" ]

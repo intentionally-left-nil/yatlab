@@ -19,7 +19,6 @@
     "babel-runtime": "^6.26.0",
     "body-parser": "^1.18.2",
     "compression": "^1.7.2",
-    "dotenv": "^5.0.0",
     "express": "^4.16.2",
     "ignore-styles": "^5.0.1",
     "jsonwebtoken": "^8.1.1",
@@ -46,7 +45,6 @@
     "build:dev:watch": "yarn build:dev --watch",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "db:create": "./scripts/create_db.sh",
     "db:migrate": "yarn run node-pg-migrate up"
   }
 }

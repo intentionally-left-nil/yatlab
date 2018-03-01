@@ -2,27 +2,25 @@ version: '3'
 services:
   db:
     image: postgres:10.2
+    ports:
+      - "5432:5432"
+
   web:
     image: yatlab:latest
     build: .
     ports:
       - "3000:3000"
     depends_on:
-      - migration
       - db
-
     env_file:
-    - docker.env
-    environment:
-      DATABASE_URL: postgres://postgres:@db:5432/postgres
+      - .env
 
-  migration:
+  migrate:
     image: yatlab:latest
     command: yarn db:migrate
-    volumes:
-      - .:/code
     depends_on:
       - db
-
+    env_file:
+      - .env
     environment:
-      DATABASE_URL: postgres://postgres:@db:5432/postgres
+      - DATABASE_URL=postgres://postgres:@db:5432/postgres

@@ -1,13 +1,13 @@
 const fetch = require('node-fetch');
 const getPort = require('./getPort');
 
-const apiFetch = (url, req) => {
+const apiFetch = (url, cookies) => {
   const headers = {
-    'Authorization': req.universalCookies.get('Authorization'),
+    'Authorization': cookies.get('Authorization'),
     'Content-type': 'application/json',
   };
 
-  const base = `${req.protocol}://${req.hostname}:${getPort()}`;
+  const base = `http://localhost:${getPort()}`;
   const fetchData = fetch(`${base}/api/${url}`, {headers}).then((response) => {
     return response.text().then(body => ({response, body}));
   })
