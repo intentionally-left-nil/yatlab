@@ -44,10 +44,14 @@ jobs:
 
   deploy:
     <<: *defaults
+    docker:
+      - image: docker:latest
     steps:
       - checkout
       - attach_workspace:
           at: ~/yatlab
+      - setup_remote_docker:
+          docker_layer_caching: true
       - run: docker build -t yatlab:latest .
 
       - run: |
