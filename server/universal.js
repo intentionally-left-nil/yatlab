@@ -23,28 +23,28 @@ module.exports = function universalLoader(req, res) {
       console.error('read err', err)
       return res.status(404).end()
     }
-    const initialState = getInitialState(req.universalCookies);
+    getInitialState(req.universalCookies).then((initialState) => {
+      const context = {}
+      const markup = renderToString(
+        <StaticRouter
+          location={req.url}
+          context={context}
+        >
+          <CookiesProvider cookies={req.universalCookies}>
+            <App {...initialState} />
+          </CookiesProvider>
+        </StaticRouter>
+      )
 
-    const context = {}
-    const markup = renderToString(
-      <StaticRouter
-        location={req.url}
-        context={context}
-      >
-        <CookiesProvider cookies={req.universalCookies}>
-          <App {...initialState} />
-        </CookiesProvider>
-      </StaticRouter>
-    )
-
-    if (context.url) {
-      // Somewhere a `<Redirect>` was rendered
-      res.redirect(301, context.url)
-    } else {
-      // we're good, send the response
-      html = html.replace('{{SSR}}', markup);
-      html = addInitialState(initialState, html);
-      res.send(html);
-    }
+      if (context.url) {
+        // Somewhere a `<Redirect>` was rendered
+        res.redirect(301, context.url)
+      } else {
+        // we're good, send the response
+        html = html.replace('{{SSR}}', markup);
+        html = addInitialState(initialState, html);
+        res.send(html);
+      }
+    });
   })
 }
