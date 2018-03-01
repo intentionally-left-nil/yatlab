@@ -48,7 +48,7 @@ const create = (req, res, next) => {
 const show = (req, res, next) => {
   const id = req.params.id;
   db.one('SELECT name from teams WHERE id = ${id}', {id})
-    .then(name => jsonRespond(res, {id, name}))
+    .then(({name}) => jsonRespond(res, {id, name}))
     .catch((error) => {
       const status = error.name === "QueryResultError" ? 404: 500;
       jsonRespond(res, {error}, status)

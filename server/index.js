@@ -6,8 +6,9 @@ require('babel-register')({
 });
 
 const app = require('./app');
+const getPort = require('./helpers/getPort');
 
-const PORT = process.env.PORT || 3000;
+const PORT = getPort();
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}!`)
