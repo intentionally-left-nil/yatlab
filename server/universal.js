@@ -22,7 +22,7 @@ module.exports = function universalLoader(req, res) {
       console.error('read err', err)
       return res.status(404).end()
     }
-    const initialState = { magicNumber: 42 };
+    const initialState = {};
 
     const context = {}
     const markup = renderToString(
