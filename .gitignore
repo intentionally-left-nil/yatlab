@@ -18,4 +18,4 @@ npm-debug.log
 yarn-error.log
 
 # App secrets
-.env
+*.env
