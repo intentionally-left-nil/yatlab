@@ -56,8 +56,11 @@ jobs:
 
       - run: |
           if [ "${CIRCLE_BRANCH}" == "circleci" ]; then
-            docker login --username ${DOCKER_USER} --password ${DOCKER_PASSWORD}
-
+            docker login --username "${DOCKER_USER}" --password "${DOCKER_PASSWORD}"
+          fi
+    
+      - run: |
+          if [ "${CIRCLE_BRANCH}" == "circleci" ]; then
             docker tag app "anilredshift/yatlab:${CIRCLE_SHA1}"
             docker push "anilredshift/yatlab:${CIRCLE_SHA1}"
 
