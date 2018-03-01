@@ -11,7 +11,7 @@ jobs:
       - checkout
       - restore_cache:
           key: dependency-cache-{{ checksum "yarn.lock" }}
-      - dev_dependencies: yarn install --production=false
+      - run: yarn install --production=false
 
       - run: yarn build
 
