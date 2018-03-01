@@ -1,0 +1,57 @@
+defaults: &defaults
+  working_directory: ~/yatlab
+  docker:
+    - image: circleci/node:9.6.1-browsers
+
+version: 2
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+      - dev_dependencies: yarn install --production=false
+
+      - run: yarn build
+
+      - persist_to_workspace:
+          root: ~/yatlab
+          paths:
+            - build
+
+      - save_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+  test:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+
+      - test: yarn test
+
+      - save_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+
+      - run: echo "hello tests"
+
+  deploy:
+    <<: *defaults
+    steps:
+      - checkout
+
+workflows:
+  version: 2
+  build_test_deploy:
+    jobs:
+      - build
+      - test
+      - deploy:
+          requires:
+            - build
+            - test
