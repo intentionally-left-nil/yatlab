@@ -1,5 +1,11 @@
 const stringify = require('querystring').stringify;
-const { getAccessToken, setUser } = require('../helpers/authentication');
+const {
+  getAccessToken,
+  getUser,
+  setUser,
+  isAuthorized,
+  respondUnauthorized
+} = require('../helpers/authentication');
 const db = require('../helpers/db');
 const jsonRespond = require('../helpers/jsonRespond');
 
@@ -46,13 +52,18 @@ const create = (req, res, next) => {
 };
 
 const show = (req, res, next) => {
+  const user = getUser(req.universalCookies);
   const id = req.params.id;
+  if (isAuthorized(user, {team: id})) {
   db.one('SELECT name from teams WHERE id = ${id}', {id})
     .then(({name}) => jsonRespond(res, {id, name}))
     .catch((error) => {
       const status = error.name === "QueryResultError" ? 404: 500;
       jsonRespond(res, {error}, status)
     });
+  } else {
+    respondUnauthorized(res);
+  }
 };
 
 module.exports = {

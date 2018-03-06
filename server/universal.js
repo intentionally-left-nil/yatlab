@@ -23,7 +23,7 @@ module.exports = function universalLoader(req, res) {
       console.error('read err', err)
       return res.status(404).end()
     }
-    getInitialState(req.universalCookies).then((initialState) => {
+    getInitialState(req).then((initialState) => {
       const context = {}
       const markup = renderToString(
         <StaticRouter

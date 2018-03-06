@@ -1,10 +1,10 @@
 const { getUser } = require('./helpers/authentication');
 const apiFetch = require('./helpers/apiFetch');
 
-const getInitialState = (cookies) => {
-  const user = getUser(cookies);
+const getInitialState = (req) => {
+  const user = getUser(req.universalCookies);
   if (!user) return Promise.resolve({});
-  const team = apiFetch(`teams/${user.team}`, cookies)
+  const team = apiFetch(req, `teams/${user.team}`)
     .then(({name}) => ({name}))
     .catch(() => null);
 

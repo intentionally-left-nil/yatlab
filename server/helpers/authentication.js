@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const stringify = require('querystring').stringify;
 const fetch = require('node-fetch');
+const jsonRespond = require('./jsonRespond');
 
 const twoWeeksInSeconds = 60 * 60 * 24 * 14;
 
@@ -50,4 +51,18 @@ const getUser = (cookies) => {
   return user;
 };
 
-module.exports = { setUser, getUser, getAccessToken };
+const isAuthorized = (user, desiredAccess) => {
+  let authorized = false;
+  if (user) {
+    const {team: desiredTeam, user: desiredUser} = desiredAccess;
+    authorized = ((!desiredTeam || user.team === desiredTeam) &&
+      (!desiredUser || user.sub === desiredUser));
+  }
+  return authorized;
+};
+
+const respondUnauthorized = (res) => {
+  jsonRespond(res, {error: 'Unauthorized'}, 403);
+};
+
+module.exports = { setUser, getUser, getAccessToken, isAuthorized, respondUnauthorized };
