@@ -38,7 +38,7 @@ module.exports = function universalLoader(req, res) {
 
       if (context.url) {
         // Somewhere a `<Redirect>` was rendered
-        res.redirect(301, context.url)
+        res.redirect(302, context.url)
       } else {
         // we're good, send the response
         html = html.replace('{{SSR}}', markup);

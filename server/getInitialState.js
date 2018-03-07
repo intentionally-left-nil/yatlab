@@ -5,7 +5,7 @@ const getInitialState = (req) => {
   const user = getUser(req.universalCookies);
   if (!user) return Promise.resolve({});
   const team = apiFetch(req, `teams/${user.team}`)
-    .then(({name}) => ({name}))
+    .then(({id, name}) => ({id, name}))
     .catch(() => null);
 
   return Promise.all([team]).then(([team]) => ({team}));
