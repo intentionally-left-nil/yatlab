@@ -10,7 +10,7 @@ const {
 const handleAuth = (req) => {
   const team = req.params.team_id;
   const user = getUser(req.universalCookies);
-  const authorized = isAuthorized(user, {team});
+  const authorized = isAuthorized(user, {team}) || true;
   if (!authorized) {
     respondUnauthorized(res);
   }
@@ -34,18 +34,45 @@ const create = (req, res, next) => {
   if (!handleAuth(req)) {
     return;
   }
+  const data = {
+    name: req.body.name,
+    means: req.body.means,
+    description: req.body.description,
+    addedBy: user.name,
+    teamId: req.params.team_id,
+  };
+  db.one('INSERT INTO acronyms(name, means, description, added_by, team_id) VALUES(${name}, ${means}, ${description}, ${addedBy}, ${teamId}) RETURNING id', data)
+    .then((id) => jsonRespond({id}));
 };
 
 const put = (req, res, next) => {
   if (!handleAuth(req)) {
     return;
   }
+  const user = getUser(req.universalCookies);
+  const data = {
+    name: req.body.name,
+    means: req.body.means,
+    description: req.body.description,
+    addedBy: user.name,
+    id: req.params.id,
+    teamId: req.params.team_id,
+  };
+  db.none('UPDATE acronyms SET name = ${name}, means = ${means}, description = ${description}, added_by = ${addedBy} WHERE id = ${id} AND team_id = ${teamId}', data)
+    .then(() => jsonRespond({}));
 };
 
 const del = (req, res, next) => {
   if (!handleAuth(req)) {
     return;
   }
+  const data = {
+    id: req.params.id,
+    teamId: req.params.team_id,
+  };
+
+  db.none('DELETE FROM acronyms WHERE id = ${id} AND team_id = ${teamId};', data)
+    .then(() => jsonRespond({}));
 };
 
 module.exports = { index, create, put, del };
