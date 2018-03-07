@@ -9,6 +9,15 @@ import NoMatch from '../components/NoMatch';
 import { getUser } from '../helpers/authentication';
 
 class App extends Component {
+  constructor() {
+    super();
+    this.renderTeamShow = this.renderTeamShow.bind(this);
+  }
+
+  renderTeamShow(props) {
+    return (<TeamsShow {...props} team={this.props.team} />);
+  }
+
   render() {
     const user = getUser(this.props.cookies);
     if (this.props.location.pathname === '/' && user) {
@@ -23,7 +32,7 @@ class App extends Component {
         <Header user={user} />
         <Switch>
           <Route path="/teams/new" component={TeamsNew} />
-          <Route path="/teams/:id" component={TeamsShow} />
+          <Route path="/teams/:id" render={this.renderTeamShow} />
           <Route component={NoMatch} />
         </Switch>
       </div>

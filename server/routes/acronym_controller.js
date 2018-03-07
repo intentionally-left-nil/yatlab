@@ -23,7 +23,7 @@ const index = (req, res, next) => {
   }
   const team = req.params.team_id;
   db.any('SELECT id, name, means, description, added_by FROM acronyms a WHERE team_id = ${team}', {team})
-    .then(data => jsonRespond(res, data))
+    .then(acronyms => jsonRespond(res, { acronyms }))
     .catch((error) => {
       const status = error.name === "QueryResultError" ? 404: 500;
       jsonRespond(res, {error}, status)

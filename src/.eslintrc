@@ -5,6 +5,7 @@
       "jest": true
   },
   "rules": {
+    "prefer-promise-reject-errors": "off",
     "react/prefer-stateless-function": ["off", { "ignorePureComponents": true }],
     "react/jsx-filename-extension": "off",
     "jsx-a11y/anchor-is-valid": ["error", {

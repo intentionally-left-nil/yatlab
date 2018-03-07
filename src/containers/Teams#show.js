@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
+import apiFetch from '../helpers/apiFetch';
 
 class TeamShow extends Component {
   constructor() {
@@ -17,14 +18,28 @@ class TeamShow extends Component {
       ],
     };
     this.renderEditable = this.renderEditable.bind(this);
-    this.onAdd = this.onAdd.bind(this);
-    this.onUpdate = this.onUpdate.bind(this);
+    this.add = this.add.bind(this);
+    this.update = this.update.bind(this);
   }
 
-  onAdd(index) {
+  componentDidMount() {
+    const { id } = this.props.match.params;
+    apiFetch(`/api/teams/${id}/acronyms`).then(({ acronyms }) => this.updateAcronyms(acronyms));
   }
 
-  onUpdate(index) {
+  add(index) {
+    const { id } = this.props.match.params;
+    apiFetch(`/api/teams/${id}/acronyms`, {
+      method: 'post',
+      body: JSON.stringify(this.state.acronyms[index]),
+    });
+  }
+
+  update(index) {
+  }
+
+  updateAcronyms(acronyms) {
+    this.setState({ acronyms });
   }
 
   renderEditable(cellInfo) {
@@ -34,9 +49,9 @@ class TeamShow extends Component {
         contentEditable
         suppressContentEditableWarning
         onBlur={(e) => {
-          const data = [...this.state.acronyms];
-          data[cellInfo.index][cellInfo.column.id] = e.target.innerHTML;
-          this.setState({ data });
+          const acronyms = [...this.state.acronyms];
+          acronyms[cellInfo.index][cellInfo.column.id] = e.target.innerHTML;
+          this.updateAcronyms(acronyms);
         }}
         dangerouslySetInnerHTML={{
           __html: this.state.acronyms[cellInfo.index][cellInfo.column.id],
@@ -46,7 +61,6 @@ class TeamShow extends Component {
   }
 
   render() {
-    const { name } = this.props.match.params;
     const numRows = this.state.acronyms.length;
 
     const button = ({ index }) => {
@@ -91,7 +105,7 @@ class TeamShow extends Component {
 
     return (
       <div>
-        <h1>{`Team ${name}`}</h1>
+        <h1>{`Team ${this.props.team.name}`}</h1>
         <ReactTable
           data={this.state.acronyms}
           columns={columns}
@@ -102,9 +116,13 @@ class TeamShow extends Component {
 }
 
 TeamShow.propTypes = {
+  team: PropTypes.shape({
+    name: PropTypes.string,
+    id: PropTypes.string,
+  }).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
-      name: PropTypes.string,
+      id: PropTypes.string,
     }),
   }).isRequired,
 };
