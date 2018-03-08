@@ -43,8 +43,8 @@ const create = (req, res, next) => {
     addedBy: user.name,
     teamId,
   };
-  db.one('INSERT INTO acronyms(name, means, description, added_by, team_id) VALUES(${name}, ${means}, ${description}, ${addedBy}, ${teamId}) RETURNING id', data)
-    .then((id) => jsonRespond(res, {id}))
+  db.one('INSERT INTO acronyms(name, means, description, added_by, team_id) VALUES(${name}, ${means}, ${description}, ${addedBy}, ${teamId}) RETURNING id, added_by', data)
+    .then(({ id, added_by }) => jsonRespond(res, { id, added_by }))
     .catch((error) => {
       const status = error.name === "QueryResultError" ? 404: 500;
       jsonRespond(res, {error}, status)

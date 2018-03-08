@@ -49,11 +49,12 @@ class TeamShow extends Component {
     apiFetch(`/api/teams/${teamId}/acronyms`, {
       method: 'post',
       body,
-    }).then(({ id }) => {
+    }).then(({ id, added_by }) => {
       const newIndex = this.state.acronyms.findIndex(a => a.id === tempName);
       this.updateAcronyms(this.state.acronyms
         .setIn([newIndex, 'meta'], Map({ state: 'default' }))
-        .setIn([newIndex, 'id'], id));
+        .setIn([newIndex, 'id'], id)
+        .setIn([newIndex, 'added_by'], added_by));
     });
   }
 
