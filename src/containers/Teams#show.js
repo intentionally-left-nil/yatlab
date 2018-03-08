@@ -77,6 +77,56 @@ class TeamShow extends Component {
     this.setState({ acronyms });
   }
 
+
+  renderAddRowButton(index) {
+    const onClick = () => this.add(index);
+    return (<button onClick={onClick}>Add</button>);
+  }
+
+  renderEditRowButtons(index) {
+    const editing = this.state.acronyms.getIn([index, 'meta', 'state']) === 'editing';
+    let buttons;
+    if (editing) {
+      const add = () => this.update(index);
+      const reset = () => {
+        const original = this.state.acronyms.getIn([index, 'meta', 'original']);
+        this.updateAcronyms(this.state.acronyms
+          .setIn([index, 'name'], original.get('name'))
+          .setIn([index, 'means'], original.get('means'))
+          .setIn([index, 'description'], original.get('description'))
+          .setIn([index, 'meta', 'state'], 'default')
+          .deleteIn([index, 'meta', 'original']));
+      };
+
+      buttons = (
+        <div>
+          <button onClick={add}>Add</button>
+          <button onClick={reset}>Reset</button>
+        </div>
+      );
+    } else {
+      const edit = () => {
+        const original = Map({
+          name: this.state.acronyms.getIn([index, 'name']),
+          means: this.state.acronyms.getIn([index, 'means']),
+          description: this.state.acronyms.getIn([index, 'description']),
+        });
+        this.updateAcronyms(this.state.acronyms
+          .setIn([index, 'meta', 'state'], 'editing')
+          .setIn([index, 'meta', 'original'], original));
+      };
+      const del = () => {
+      };
+      buttons = (
+        <div>
+          <button onClick={edit}>Edit</button>
+          <button onClick={del}>Delete</button>
+        </div>
+      );
+    }
+    return buttons;
+  }
+
   renderEditable(cellInfo) {
     const { index, column: { id: columnId } } = cellInfo;
     return (
@@ -97,15 +147,7 @@ class TeamShow extends Component {
   render() {
     const button = ({ index }) => {
       const addRow = !!this.state.acronyms.getIn([index, 'meta', 'new']);
-      const text = addRow ? 'Add' : 'Edit';
-      const onClick = () => {
-        if (addRow) {
-          this.add(index);
-        } else {
-          this.update(index);
-        }
-      };
-      return (<button onClick={onClick}>{text}</button>);
+      return addRow ? this.renderAddRowButton(index) : this.renderEditRowButtons(index);
     };
 
     const columns = [
