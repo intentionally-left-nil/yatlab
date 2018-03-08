@@ -1,10 +1,13 @@
 const apiFetch = (path, options = {}) => {
-  const headers = {
-    Accept: 'application/json',
-    'Content-type': 'application/json',
+  const defaultOptions = {
+    headers: {
+      Accept: 'application/json',
+      'Content-type': 'application/json',
+    },
+    credentials: 'same-origin',
   };
 
-  const fetchData = fetch(path, Object.assign({}, { headers }, options))
+  const fetchData = fetch(path, Object.assign({}, defaultOptions, options))
     .then(response => response.text().then(body => ({ response, body })))
     .catch(() => Promise.reject(({ ok: false, error: 'Fetch failed unexpectedly' })));
 

@@ -4,6 +4,14 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import apiFetch from '../helpers/apiFetch';
 
+let tempId = 0;
+
+const getTempName = () => {
+  const name = `temp${tempId}`;
+  tempId += 1;
+  return name;
+};
+
 class TeamShow extends Component {
   constructor() {
     super();
@@ -28,10 +36,24 @@ class TeamShow extends Component {
   }
 
   add(index) {
-    const { id } = this.props.match.params;
-    apiFetch(`/api/teams/${id}/acronyms`, {
+    const { id: teamId } = this.props.match.params;
+    const tempName = getTempName();
+    this.state.acronyms[index].id = tempName;
+
+    const body = JSON.stringify({
+      name: this.state.acronyms[index].name,
+      means: this.state.acronyms[index].means,
+      description: this.state.acronyms[index].description,
+    });
+
+    apiFetch(`/api/teams/${teamId}/acronyms`, {
       method: 'post',
-      body: JSON.stringify(this.state.acronyms[index]),
+      body,
+    }).then(({ id }) => {
+      const acronyms = this.state.acronyms.slice();
+      const newIndex = acronyms.findIndex(a => a.id === tempName);
+      acronyms[newIndex] = Object.assign({}, acronyms[newIndex], { id });
+      this.updateAcronyms(acronyms);
     });
   }
 
@@ -39,6 +61,14 @@ class TeamShow extends Component {
   }
 
   updateAcronyms(acronyms) {
+    if (!(acronyms.length && acronyms.some(acronym => !acronym.id && acronym.id !== 0))) {
+      acronyms.push({
+        name: '',
+        means: '',
+        description: '',
+        added_by: '',
+      });
+    }
     this.setState({ acronyms });
   }
 
