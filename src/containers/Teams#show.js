@@ -70,7 +70,7 @@ class TeamShow extends Component {
         added_by: '',
         meta: {
           new: true,
-          state: 'default',
+          state: 'editing',
         },
       }));
     }
@@ -129,10 +129,11 @@ class TeamShow extends Component {
 
   renderEditable(cellInfo) {
     const { index, column: { id: columnId } } = cellInfo;
+    const editable = this.state.acronyms.getIn([index, 'meta', 'state']) === 'editing' && columnId !== 'added_by';
     return (
       <div
         style={{ backgroundColor: '#fafafa' }}
-        contentEditable
+        contentEditable={editable}
         suppressContentEditableWarning
         onBlur={(e) => {
           this.updateAcronyms(this.state.acronyms.setIn([index, columnId], e.target.innerHTML));
