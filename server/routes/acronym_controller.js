@@ -34,14 +34,14 @@ const create = (req, res, next) => {
   if (!handleAuth(req)) {
     return;
   }
-  const team = req.params.team_id;
+  const teamId = req.params.team_id;
   const user = getUser(req.universalCookies);
   const data = {
     name: req.body.name,
     means: req.body.means,
     description: req.body.description,
     addedBy: user.name,
-    teamId: team.id,
+    teamId,
   };
   db.one('INSERT INTO acronyms(name, means, description, added_by, team_id) VALUES(${name}, ${means}, ${description}, ${addedBy}, ${teamId}) RETURNING id', data)
     .then((id) => jsonRespond(res, {id}))
