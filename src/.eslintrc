@@ -5,6 +5,7 @@
       "jest": true
   },
   "rules": {
+    "no-param-reassign": "off",
     "prefer-promise-reject-errors": "off",
     "react/prefer-stateless-function": ["off", { "ignorePureComponents": true }],
     "react/jsx-filename-extension": "off",

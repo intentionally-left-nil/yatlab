@@ -27,6 +27,7 @@ exports.up = (pgm) => {
     team_id: {
       type: 'string',
       unique: false,
+      notNull: true,
       references: 'teams'
     },
     added_by: {

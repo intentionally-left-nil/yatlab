@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { fromJS, List, Map } from 'immutable';
 import PropTypes from 'prop-types';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
@@ -16,14 +17,7 @@ class TeamShow extends Component {
   constructor() {
     super();
     this.state = {
-      acronyms: [
-        {
-          name: '',
-          means: '',
-          description: '',
-          added_by: '',
-        },
-      ],
+      acronyms: List([]),
     };
     this.renderEditable = this.renderEditable.bind(this);
     this.add = this.add.bind(this);
@@ -32,28 +26,34 @@ class TeamShow extends Component {
 
   componentDidMount() {
     const { id } = this.props.match.params;
-    apiFetch(`/api/teams/${id}/acronyms`).then(({ acronyms }) => this.updateAcronyms(acronyms));
+    apiFetch(`/api/teams/${id}/acronyms`).then(({ acronyms }) => {
+      acronyms = acronyms.map(acronym => Object.assign({}, { meta: { state: 'default' } }, acronym));
+      this.updateAcronyms(fromJS(acronyms));
+    });
   }
 
   add(index) {
     const { id: teamId } = this.props.match.params;
     const tempName = getTempName();
-    this.state.acronyms[index].id = tempName;
+
+    this.updateAcronyms(this.state.acronyms
+      .setIn([index, 'meta', 'state'], 'saving')
+      .setIn([index, 'meta', 'tempName'], tempName));
 
     const body = JSON.stringify({
-      name: this.state.acronyms[index].name,
-      means: this.state.acronyms[index].means,
-      description: this.state.acronyms[index].description,
+      name: this.state.acronyms.getIn([index, 'name']),
+      means: this.state.acronyms.getIn([index, 'means']),
+      description: this.state.acronyms.getIn([index, 'description']),
     });
 
     apiFetch(`/api/teams/${teamId}/acronyms`, {
       method: 'post',
       body,
     }).then(({ id }) => {
-      const acronyms = this.state.acronyms.slice();
-      const newIndex = acronyms.findIndex(a => a.id === tempName);
-      acronyms[newIndex] = Object.assign({}, acronyms[newIndex], { id });
-      this.updateAcronyms(acronyms);
+      const newIndex = this.state.acronyms.findIndex(a => a.id === tempName);
+      this.updateAcronyms(this.state.acronyms
+        .setIn([newIndex, 'meta'], Map({ state: 'default' }))
+        .setIn([newIndex, 'id'], id));
     });
   }
 
@@ -61,43 +61,44 @@ class TeamShow extends Component {
   }
 
   updateAcronyms(acronyms) {
-    if (!(acronyms.length && acronyms.some(acronym => !acronym.id && acronym.id !== 0))) {
-      acronyms.push({
+    if (!acronyms.some(acronym => acronym.getIn(['meta', 'new']))) {
+      acronyms = acronyms.push(fromJS({
         name: '',
         means: '',
         description: '',
         added_by: '',
-      });
+        meta: {
+          new: true,
+          state: 'default',
+        },
+      }));
     }
     this.setState({ acronyms });
   }
 
   renderEditable(cellInfo) {
+    const { index, column: { id: columnId } } = cellInfo;
     return (
       <div
         style={{ backgroundColor: '#fafafa' }}
         contentEditable
         suppressContentEditableWarning
         onBlur={(e) => {
-          const acronyms = [...this.state.acronyms];
-          acronyms[cellInfo.index][cellInfo.column.id] = e.target.innerHTML;
-          this.updateAcronyms(acronyms);
+          this.updateAcronyms(this.state.acronyms.setIn([index, columnId], e.target.innerHTML));
         }}
         dangerouslySetInnerHTML={{
-          __html: this.state.acronyms[cellInfo.index][cellInfo.column.id],
+          __html: this.state.acronyms.getIn([index, columnId]),
         }}
       />
     );
   }
 
   render() {
-    const numRows = this.state.acronyms.length;
-
     const button = ({ index }) => {
-      const lastRow = index + 1 === numRows;
-      const text = lastRow ? 'Add' : 'Edit';
+      const addRow = !!this.state.acronyms.getIn([index, 'meta', 'new']);
+      const text = addRow ? 'Add' : 'Edit';
       const onClick = () => {
-        if (lastRow) {
+        if (addRow) {
           this.add(index);
         } else {
           this.update(index);
@@ -137,7 +138,7 @@ class TeamShow extends Component {
       <div>
         <h1>{`Team ${this.props.team.name}`}</h1>
         <ReactTable
-          data={this.state.acronyms}
+          data={this.state.acronyms.toJS()}
           columns={columns}
         />
       </div>
