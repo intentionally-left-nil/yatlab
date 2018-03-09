@@ -120,12 +120,13 @@ class TeamShow extends Component {
 
   renderAddRowButton(index) {
     const onClick = () => this.add(index);
-    const disabled = this.state.acronyms.getIn([index, 'meta', 'state']) === 'saving' || undefined;
-    return (<button disabled={disabled} onClick={onClick}>Add</button>);
+    const disabled = this.state.acronyms.getIn([index, 'meta', 'state']) === 'saving';
+    return (<button disabled={disabled ? 'disabled' : undefined} onClick={onClick}>Add</button>);
   }
 
   renderEditRowButtons(index) {
     const editing = this.state.acronyms.getIn([index, 'meta', 'state']) === 'editing';
+    const disabled = this.state.acronyms.getIn([index, 'meta', 'state']) === 'saving';
     let buttons;
     if (editing) {
       const update = () => this.update(index);
@@ -141,8 +142,8 @@ class TeamShow extends Component {
 
       buttons = (
         <div>
-          <button onClick={update}>Save</button>
-          <button onClick={reset}>Reset</button>
+          <button disabled={disabled ? 'disabled' : undefined} onClick={update}>Save</button>
+          <button disabled={disabled ? 'disabled' : undefined} onClick={reset}>Reset</button>
         </div>
       );
     } else {
@@ -157,11 +158,10 @@ class TeamShow extends Component {
           .setIn([index, 'meta', 'original'], original));
       };
       const del = () => this.del(index);
-      const disabled = this.state.acronyms.getIn([index, 'meta', 'state']) === 'saving' || undefined;
       buttons = (
         <div>
-          <button disabled={disabled} onClick={edit}>Edit</button>
-          <button disabeld={disabled} onClick={del}>Delete</button>
+          <button disabled={disabled ? 'disabled' : undefined} onClick={edit}>Edit</button>
+          <button disabled={disabled ? 'disabled' : undefined} onClick={del}>Delete</button>
         </div>
       );
     }
