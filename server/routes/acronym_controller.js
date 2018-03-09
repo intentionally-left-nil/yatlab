@@ -65,7 +65,7 @@ const put = (req, res, next) => {
     teamId: req.params.team_id,
   };
   db.none('UPDATE acronyms SET name = ${name}, means = ${means}, description = ${description}, added_by = ${addedBy} WHERE id = ${id} AND team_id = ${teamId}', data)
-    .then(() => jsonRespond(res, {}));
+    .then(() => jsonRespond(res, { added_by: user.name }));
 };
 
 const del = (req, res, next) => {

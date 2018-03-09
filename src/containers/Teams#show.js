@@ -32,6 +32,14 @@ class TeamShow extends Component {
     });
   }
 
+  getBody(index) {
+    return JSON.stringify({
+      name: this.state.acronyms.getIn([index, 'name']),
+      means: this.state.acronyms.getIn([index, 'means']),
+      description: this.state.acronyms.getIn([index, 'description']),
+    });
+  }
+
   add(index) {
     const { id: teamId } = this.props.match.params;
     const tempName = getTempName();
@@ -40,11 +48,7 @@ class TeamShow extends Component {
       .setIn([index, 'meta', 'state'], 'saving')
       .setIn([index, 'meta', 'tempName'], tempName));
 
-    const body = JSON.stringify({
-      name: this.state.acronyms.getIn([index, 'name']),
-      means: this.state.acronyms.getIn([index, 'means']),
-      description: this.state.acronyms.getIn([index, 'description']),
-    });
+    const body = this.getBody(index);
 
     apiFetch(`/api/teams/${teamId}/acronyms`, {
       method: 'post',
@@ -59,6 +63,24 @@ class TeamShow extends Component {
   }
 
   update(index) {
+    const { id: teamId } = this.props.match.params;
+    const id = this.state.acronyms.getIn([index, 'id']);
+    const tempName = getTempName();
+
+    this.updateAcronyms(this.state.acronyms
+      .setIn([index, 'meta', 'state'], 'saving')
+      .setIn([index, 'meta', 'tempName'], tempName));
+
+    const body = this.getBody(index);
+    apiFetch(`/api/teams/${teamId}/acronyms/${id}`, {
+      method: 'put',
+      body,
+    }).then(({ added_by }) => {
+      const newIndex = this.state.acronyms.findIndex(a => a.id === tempName);
+      this.updateAcronyms(this.state.acronyms
+        .setIn([newIndex, 'meta'], Map({ state: 'default' }))
+        .setIn([newIndex, 'added_by'], added_by));
+    });
   }
 
   updateAcronyms(acronyms) {
@@ -80,14 +102,15 @@ class TeamShow extends Component {
 
   renderAddRowButton(index) {
     const onClick = () => this.add(index);
-    return (<button onClick={onClick}>Add</button>);
+    const disabled = this.state.acronyms.getIn([index, 'meta', 'state']) === 'saving' || undefined;
+    return (<button disabled={disabled} onClick={onClick}>Add</button>);
   }
 
   renderEditRowButtons(index) {
     const editing = this.state.acronyms.getIn([index, 'meta', 'state']) === 'editing';
     let buttons;
     if (editing) {
-      const add = () => this.update(index);
+      const update = () => this.update(index);
       const reset = () => {
         const original = this.state.acronyms.getIn([index, 'meta', 'original']);
         this.updateAcronyms(this.state.acronyms
@@ -100,7 +123,7 @@ class TeamShow extends Component {
 
       buttons = (
         <div>
-          <button onClick={add}>Add</button>
+          <button onClick={update}>Save</button>
           <button onClick={reset}>Reset</button>
         </div>
       );
@@ -117,10 +140,11 @@ class TeamShow extends Component {
       };
       const del = () => {
       };
+      const disabled = this.state.acronyms.getIn([index, 'meta', 'state']) === 'saving' || undefined;
       buttons = (
         <div>
-          <button onClick={edit}>Edit</button>
-          <button onClick={del}>Delete</button>
+          <button disabled={disabled} onClick={edit}>Edit</button>
+          <button disabeld={disabled} onClick={del}>Delete</button>
         </div>
       );
     }
