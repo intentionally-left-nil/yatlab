@@ -83,6 +83,23 @@ class TeamShow extends Component {
     });
   }
 
+  del(index) {
+    const { id: teamId } = this.props.match.params;
+    const id = this.state.acronyms.getIn([index, 'id']);
+    const tempName = getTempName();
+
+    this.updateAcronyms(this.state.acronyms
+      .setIn([index, 'meta', 'state'], 'saving')
+      .setIn([index, 'meta', 'tempName'], tempName));
+
+    apiFetch(`/api/teams/${teamId}/acronyms/${id}`, {
+      method: 'delete',
+    }).then(() => {
+      const newIndex = this.state.acronyms.findIndex(a => a.id === tempName);
+      this.updateAcronyms(this.state.acronyms.delete(newIndex));
+    });
+  }
+
   updateAcronyms(acronyms) {
     if (!acronyms.some(acronym => acronym.getIn(['meta', 'new']))) {
       acronyms = acronyms.push(fromJS({
@@ -138,8 +155,7 @@ class TeamShow extends Component {
           .setIn([index, 'meta', 'state'], 'editing')
           .setIn([index, 'meta', 'original'], original));
       };
-      const del = () => {
-      };
+      const del = () => this.del(index);
       const disabled = this.state.acronyms.getIn([index, 'meta', 'state']) === 'saving' || undefined;
       buttons = (
         <div>
