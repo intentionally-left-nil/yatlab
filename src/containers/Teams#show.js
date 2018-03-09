@@ -40,13 +40,22 @@ class TeamShow extends Component {
     });
   }
 
+  getIndex(tempName) {
+    return this.state.acronyms.findIndex(acronym => acronym.getIn(['meta', 'tempName']) === tempName);
+  }
+
+  setTempName(index) {
+    const tempName = getTempName();
+    const acronyms = this.state.acronyms
+      .setIn([index, 'meta', 'tempName'], tempName)
+      .setIn([index, 'meta', 'state'], 'saving');
+    this.updateAcronyms(acronyms);
+    return tempName;
+  }
+
   add(index) {
     const { id: teamId } = this.props.match.params;
-    const tempName = getTempName();
-
-    this.updateAcronyms(this.state.acronyms
-      .setIn([index, 'meta', 'state'], 'saving')
-      .setIn([index, 'meta', 'tempName'], tempName));
+    const tempName = this.setTempName(index);
 
     const body = this.getBody(index);
 
@@ -54,7 +63,7 @@ class TeamShow extends Component {
       method: 'post',
       body,
     }).then(({ id, added_by }) => {
-      const newIndex = this.state.acronyms.findIndex(a => a.id === tempName);
+      const newIndex = this.getIndex(tempName);
       this.updateAcronyms(this.state.acronyms
         .setIn([newIndex, 'meta'], Map({ state: 'default' }))
         .setIn([newIndex, 'id'], id)
@@ -65,18 +74,14 @@ class TeamShow extends Component {
   update(index) {
     const { id: teamId } = this.props.match.params;
     const id = this.state.acronyms.getIn([index, 'id']);
-    const tempName = getTempName();
 
-    this.updateAcronyms(this.state.acronyms
-      .setIn([index, 'meta', 'state'], 'saving')
-      .setIn([index, 'meta', 'tempName'], tempName));
-
+    const tempName = this.setTempName(index);
     const body = this.getBody(index);
     apiFetch(`/api/teams/${teamId}/acronyms/${id}`, {
       method: 'put',
       body,
     }).then(({ added_by }) => {
-      const newIndex = this.state.acronyms.findIndex(a => a.id === tempName);
+      const newIndex = this.getIndex(tempName);
       this.updateAcronyms(this.state.acronyms
         .setIn([newIndex, 'meta'], Map({ state: 'default' }))
         .setIn([newIndex, 'added_by'], added_by));
@@ -86,16 +91,12 @@ class TeamShow extends Component {
   del(index) {
     const { id: teamId } = this.props.match.params;
     const id = this.state.acronyms.getIn([index, 'id']);
-    const tempName = getTempName();
-
-    this.updateAcronyms(this.state.acronyms
-      .setIn([index, 'meta', 'state'], 'saving')
-      .setIn([index, 'meta', 'tempName'], tempName));
+    const tempName = this.setTempName(index);
 
     apiFetch(`/api/teams/${teamId}/acronyms/${id}`, {
       method: 'delete',
     }).then(() => {
-      const newIndex = this.state.acronyms.findIndex(a => a.id === tempName);
+      const newIndex = this.getIndex(tempName);
       this.updateAcronyms(this.state.acronyms.delete(newIndex));
     });
   }
