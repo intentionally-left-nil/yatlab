@@ -53,9 +53,9 @@ jobs:
       - run: docker build -t app .
 
       - run: docker login --username "${DOCKER_USERNAME}" --password "${DOCKER_PASSWORD}"
-      - run: docker tag app "anilredshift/yatlab:${CIRCLE_SHA1}"
+      - run: docker tag app "anilredshift/yatlab:${CIRCLE_BUILD_NUM}"
       - run: docker tag app "anilredshift/yatlab:latest"
-      - run: docker push "anilredshift/yatlab:${CIRCLE_SHA1}"
+      - run: docker push "anilredshift/yatlab:${CIRCLE_BUILD_NUM}"
       - run: docker push "anilredshift/yatlab:latest"
 
 
