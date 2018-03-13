@@ -2,12 +2,21 @@ import React, { Component } from 'react';
 import PropTypes, { instanceOf } from 'prop-types';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { withCookies, Cookies } from 'react-cookie';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import { deepOrange500 } from 'material-ui/styles/colors';
 import TeamsNew from './Teams#new';
 import TeamsShow from './Teams#show';
 import Header from '../components/Header';
 import NoMatch from '../components/NoMatch';
 import Root from '../components/Root';
 import { getUser } from '../helpers/authentication';
+
+const muiTheme = getMuiTheme({
+  palette: {
+    accent1Color: deepOrange500,
+  },
+});
 
 class App extends Component {
   constructor() {
@@ -29,15 +38,19 @@ class App extends Component {
     }
 
     return (
-      <div>
-        <Header user={user} />
-        <Switch>
-          <Route path="/teams/new" component={TeamsNew} />
-          <Route path="/teams/:id" render={this.renderTeamShow} />
-          <Route path="/" component={Root} />
-          <Route component={NoMatch} />
-        </Switch>
-      </div>
+      <MuiThemeProvider muiTheme={muiTheme}>
+        <div>
+          <Header user={user} />
+          <div id="content">
+            <Switch>
+              <Route path="/teams/new" component={TeamsNew} />
+              <Route path="/teams/:id" render={this.renderTeamShow} />
+              <Route path="/" component={Root} />
+              <Route component={NoMatch} />
+            </Switch>
+          </div>
+        </div>
+      </MuiThemeProvider>
     );
   }
 }
