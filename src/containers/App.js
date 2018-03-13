@@ -6,6 +6,7 @@ import TeamsNew from './Teams#new';
 import TeamsShow from './Teams#show';
 import Header from '../components/Header';
 import NoMatch from '../components/NoMatch';
+import Root from '../components/Root';
 import { getUser } from '../helpers/authentication';
 
 class App extends Component {
@@ -33,6 +34,7 @@ class App extends Component {
         <Switch>
           <Route path="/teams/new" component={TeamsNew} />
           <Route path="/teams/:id" render={this.renderTeamShow} />
+          <Route path="/" component={Root} />
           <Route component={NoMatch} />
         </Switch>
       </div>
