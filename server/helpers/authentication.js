@@ -37,6 +37,10 @@ const setUser = (response, {id, name, team}) => {
   response.cookie('Authorization', value, { maxAge, httpOnly: prod, secure: prod });
 };
 
+const unsetUser = (cookies) => {
+  cookies.remove('Authorization');
+};
+
 const getUser = (cookies) => {
   const auth = cookies.get('Authorization');
   let user = null;
@@ -65,4 +69,4 @@ const respondUnauthorized = (res) => {
   jsonRespond(res, {error: 'Unauthorized'}, 403);
 };
 
-module.exports = { setUser, getUser, getAccessToken, isAuthorized, respondUnauthorized };
+module.exports = { setUser, getUser, unsetUser, getAccessToken, isAuthorized, respondUnauthorized };

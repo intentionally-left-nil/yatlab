@@ -6,6 +6,7 @@ class UserBadge extends PureComponent {
     return (
       <div>
         {`Hello, ${this.props.user.name}`}
+        <a href="/api/sign-out"><button>Sign Out</button></a>
       </div>
     );
   }

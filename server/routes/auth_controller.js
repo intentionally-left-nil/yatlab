@@ -1,5 +1,5 @@
 const stringify = require('querystring').stringify;
-const { getAccessToken, setUser } = require('../helpers/authentication');
+const { getAccessToken, setUser, unsetUser } = require('../helpers/authentication');
 
 const handleFailure = (res, error = "Unknown") => {
   res.redirect(`/?${stringify({error})}`);
@@ -20,6 +20,12 @@ const signIn = (req, res, next) => {
   }
 };
 
+const signOut = (req, res, next) => {
+  unsetUser(req.universalCookies);
+  res.redirect('/');
+};
+
 module.exports = {
   signIn,
+  signOut,
 };

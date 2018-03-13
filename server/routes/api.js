@@ -1,6 +1,6 @@
 const express = require('express');
 const { Client } = require('pg');
-const { signIn } = require('./sign_in_controller');
+const { signIn, signOut } = require('./auth_controller');
 const teamController = require('./team_controller');
 const acronymController = require('./acronym_controller');
 
@@ -19,6 +19,7 @@ router.put('/teams/:team_id/acronyms/:id', acronymController.put);
 router.delete('/teams/:team_id/acronyms/:id', acronymController.del);
 
 router.get('/sign-in', signIn);
+router.get('/sign-out', signOut);
 router.get('/teams/create', teamController.create);
 router.get('/teams/:id', teamController.show);
 
