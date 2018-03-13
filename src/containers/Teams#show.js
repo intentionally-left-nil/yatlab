@@ -177,12 +177,13 @@ class TeamShow extends Component {
         contentEditable={editable}
         suppressContentEditableWarning
         onBlur={(e) => {
-          this.updateAcronyms(this.state.acronyms.setIn([index, columnId], e.target.innerHTML));
+          this.updateAcronyms(this.state.acronyms.setIn([index, columnId], e.target.textContent));
         }}
-        dangerouslySetInnerHTML={{
-          __html: this.state.acronyms.getIn([index, columnId]),
-        }}
-      />
+      >
+        {
+          this.state.acronyms.getIn([index, columnId])
+        }
+      </div>
     );
   }
 
