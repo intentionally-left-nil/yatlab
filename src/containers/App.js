@@ -8,6 +8,7 @@ import { deepOrange500 } from 'material-ui/styles/colors';
 import TeamsNew from './Teams#new';
 import TeamsShow from './Teams#show';
 import Header from '../components/Header';
+import Privacy from '../containers/Privacy';
 import NoMatch from '../components/NoMatch';
 import Root from '../components/Root';
 import { getUser } from '../helpers/authentication';
@@ -45,6 +46,7 @@ class App extends Component {
             <Switch>
               <Route path="/teams/new" component={TeamsNew} />
               <Route path="/teams/:id" render={this.renderTeamShow} />
+              <Route path="/privacy" component={Privacy} />
               <Route path="/" component={Root} />
               <Route component={NoMatch} />
             </Switch>
