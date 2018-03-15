@@ -10,7 +10,7 @@ const Root = () => (
     <div>
       <ol>
         <li>Click the Sign in button above</li>
-        <li>After signing in, add yatlab to your slack workspace</li>
+        <li>After signing in, add yatlab to your Slack workspace</li>
         <li>Add some acronyms and their definitions to your team via this website</li>
         <li>Add the yatlab bot to any channel you want acronyms for</li>
       </ol>

@@ -1,6 +1,6 @@
 # Yatlab
 
-This repository holds the website component of yatlab. It handles the OAuth flow to authorize yatlab for a slack workspace. It also manages the acronyms for each team.
+This repository holds the website component of yatlab. It handles the OAuth flow to authorize yatlab for a Slack workspace. It also manages the acronyms for each team.
 
 ## Installation
 Prerequisites: Node, Yarn, Postgres
@@ -9,7 +9,7 @@ Prerequisites: Node, Yarn, Postgres
 1. `yarn install`
 1. Add the following secrets to your environment:
     * CLIENT_ID (See https://api.slack.com/apps)
-    * CLIENT_SECRET (also from slack)
+    * CLIENT_SECRET (also from Slack)
     * JWT_SECRET (A secret string to protect the authorization cookie)
     * URL_BASE (http://localhost:3000 for local development, otherwise the URL of the server)
     * DATABASE_URL (postgres://postgres:@db:5432/postgres or similar)
@@ -40,6 +40,6 @@ There's a Dockerfile that gets built and the same environment variables are pass
 Yatlab is made out of 3 github repositories and 4 services
 
 1. [yatlab-nginx](https://github.com/AnilRedshift/yatlab-nginx) handles traffic to https://yatlab.terminal.space and reverse-proxy's it to the web service
-2. [yatlab](https://github.com/AnilRedshift/yatlab) Handles the website, and stores the data it receives in a database. The website is independent of the slack bot itself.
+2. [yatlab](https://github.com/AnilRedshift/yatlab) Handles the website, and stores the data it receives in a database. The website is independent of the Slack bot itself.
 3. There is a postgres database which contains the data about the teams and acronyms
-4. [yatlab-worker](https://github.com/AnilRedshift/yatlab-worker) polls the database for changes and connects to each slack team using the slack api
+4. [yatlab-worker](https://github.com/AnilRedshift/yatlab-worker) polls the database for changes and connects to each Slack team using the Slack api
