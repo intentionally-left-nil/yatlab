@@ -18,7 +18,7 @@ const Root = () => (
     <h2>Usage</h2>
     <div>
       Once installed, yatlab will add a question mark emoji to any message containing the acronyms you define.
-      Any user can add a reaction to be notified of what the acronym means.
+      Any user can add a reaction to be notified of what the acronym means. You can also direct message yatlab <pre style={{display: 'inline'}}>help</pre> at any time.
     </div>
   </div>
 );
