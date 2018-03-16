@@ -20,6 +20,7 @@ const muiTheme = getMuiTheme({
   palette: {
     accent1Color: deepOrange500,
   },
+  userAgent: 'all',
 });
 
 class App extends Component {
