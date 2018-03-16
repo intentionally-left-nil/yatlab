@@ -48,7 +48,8 @@
     "build:dev:watch": "yarn build:dev --watch",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "db:migrate": "yarn run node-pg-migrate up",
-    "db:rollback": "yarn run node-pg-migrate down"
+    "db:migrate": "yarn node-pg-migrate up",
+    "db:migrate:create": "yarn node-pg-migrate create",
+    "db:rollback": "yarn node-pg-migrate down"
   }
 }
