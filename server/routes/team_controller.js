@@ -8,6 +8,7 @@ const {
 } = require('../helpers/authentication');
 const db = require('../helpers/db');
 const jsonRespond = require('../helpers/jsonRespond');
+const version = 2; // Needs to stay in sync with src/helpers/version
 
 // Example response from Slack
 // access_token: 'xoxp-ACCESS-TOKEN',
@@ -28,7 +29,17 @@ const saveTeam = (response) => {
       bot_access_token: botAccessToken,
     },
   } = response;
-  return db.none('INSERT INTO teams(id, access_token, bot_user_id, bot_access_token, name) VALUES($1, $2, $3, $4, $5) ON CONFLICT DO NOTHING', [teamId, accessToken, botUserId, botAccessToken, name])
+  const values = [teamId, accessToken, botUserId, botAccessToken, name, version];
+  const statement = '\
+    INSERT INTO teams(id, access_token, bot_user_id, bot_access_token, name, version) \
+    VALUES($1, $2, $3, $4, $5, $6) \
+    ON CONFLICT(id) DO UPDATE \
+    SET access_token = $2, \
+    bot_user_id = $3, \
+    bot_access_token = $4, \
+    name = $5, \
+    version = $6';
+  return db.none(statement, values)
   .then(Promise.resolve(response))
   .catch(error => Promise.reject({ok: false, error}));
 };
@@ -55,8 +66,8 @@ const show = (req, res, next) => {
   const user = getUser(req.universalCookies);
   const id = req.params.id;
   if (isAuthorized(user, {team: id})) {
-  db.one('SELECT name from teams WHERE id = ${id}', {id})
-    .then(({name}) => jsonRespond(res, {id, name}))
+  db.one('SELECT name, version from teams WHERE id = ${id}', {id})
+    .then(({name, version}) => jsonRespond(res, {id, name, version}))
     .catch((error) => {
       const status = error.name === "QueryResultError" ? 404: 500;
       jsonRespond(res, {error}, status)
