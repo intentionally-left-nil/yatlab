@@ -4,7 +4,7 @@ import { stringify } from 'querystring';
 export default (() => {
   const params = {
     client_id: process.env.CLIENT_ID,
-    scope: 'bot channels:history chat:write:bot groups:history im:read',
+    scope: 'bot channels:history chat:write:bot groups:history im:history mpim:history',
     redirect_uri: `${process.env.URL_BASE}/api/teams/create`,
   };
   const href = `https://slack.com/oauth/authorize?${stringify(params)}`;
