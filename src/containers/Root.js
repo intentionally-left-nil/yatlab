@@ -1,7 +1,8 @@
 import React from 'react';
+import Centered from '../components/Centered';
 
 const Root = () => (
-  <div>
+  <Centered>
     <h1>Yatlab</h1>
     <div>
       Welcome to Yatlab! Yatlab is an acronym expander.
@@ -20,7 +21,7 @@ const Root = () => (
       Once installed, yatlab will add a question mark emoji to any message containing the acronyms you define.
       Any user can add a reaction to be notified of what the acronym means. You can also direct message yatlab <pre style={{display: 'inline'}}>help</pre> at any time.
     </div>
-  </div>
+  </Centered>
 );
 
 export default Root;

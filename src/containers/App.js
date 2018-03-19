@@ -5,14 +5,14 @@ import { withCookies, Cookies } from 'react-cookie';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { deepOrange500 } from 'material-ui/styles/colors';
+import NoMatch from './NoMatch';
+import Root from './Root';
+import Privacy from './Privacy';
+import Support from './Support';
 import TeamsNew from './Teams#new';
 import TeamsReauthorize from './Teams#reauthorize';
 import TeamsShow from './Teams#show';
 import Header from '../components/Header';
-import Privacy from '../containers/Privacy';
-import Support from '../containers/Support';
-import NoMatch from '../components/NoMatch';
-import Root from '../components/Root';
 import { getUser } from '../helpers/authentication';
 import { needsReauthorization } from '../helpers/version';
 

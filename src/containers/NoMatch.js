@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Centered from './Centered';
+import Centered from '../components/Centered';
 import './NoMatch.css';
 
 export default () => (
