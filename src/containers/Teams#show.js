@@ -170,7 +170,7 @@ class TeamShow extends Component {
           </Button>
           <Button
             variant="flat"
-            color="primary"
+            color="secondary"
             aria-label="add"
             disabled={disabled ? 'disabled' : undefined}
             onClick={reset}
@@ -195,7 +195,7 @@ class TeamShow extends Component {
         <div>
           <Button
             variant="flat"
-            color="primary"
+            color="secondary"
             aria-label="add"
             disabled={disabled ? 'disabled' : undefined}
             onClick={edit}
@@ -204,7 +204,7 @@ class TeamShow extends Component {
           </Button>
           <Button
             variant="flat"
-            color="primary"
+            color="secondary"
             aria-label="add"
             disabled={disabled ? 'disabled' : undefined}
             onClick={del}
