@@ -278,7 +278,7 @@ class TeamShow extends Component {
           defaultSorted={[
             {
               id: 'name',
-              desc: true,
+              desc: false,
             }
           ]}
         />
