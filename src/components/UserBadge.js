@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Button from 'material-ui-next/Button';
+import Button from 'material-ui/Button';
 import { Link } from 'react-router-dom';
 import './UserBadge.css';
 

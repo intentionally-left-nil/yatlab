@@ -1,6 +1,6 @@
 import React from 'react';
 import { oneOfType, arrayOf, node } from 'prop-types';
-// import Typography from 'material-ui-next/Typography';
+// import Typography from 'material-ui/Typography';
 
 const Body = props => (
   // We can't directly use Typography variant="body1" due to nested p tags

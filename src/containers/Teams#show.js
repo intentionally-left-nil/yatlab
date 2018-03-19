@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import { fromJS, List, Map } from 'immutable';
 import PropTypes from 'prop-types';
 import ReactTable from 'react-table';
+import Button from 'material-ui/Button';
+import AddIcon from 'material-ui-icons/Add';
+import EditIcon from 'material-ui-icons/Build';
+import CheckCircleIcon from 'material-ui-icons/CheckCircle';
+import CancelIcon from 'material-ui-icons/Cancel';
+import DeleteIcon from 'material-ui-icons/Delete';
 import 'react-table/react-table.css';
 import apiFetch from '../helpers/apiFetch';
 import Title from '../components/Title';
@@ -119,11 +125,20 @@ class TeamShow extends Component {
     this.setState({ acronyms });
   }
 
-
   renderAddRowButton(index) {
     const onClick = () => this.add(index);
     const disabled = this.state.acronyms.getIn([index, 'meta', 'state']) === 'saving';
-    return (<button disabled={disabled ? 'disabled' : undefined} onClick={onClick}>Add</button>);
+    return (
+      <Button
+        variant="flat"
+        color="primary"
+        aria-label="add"
+        disabled={disabled ? 'disabled' : undefined}
+        onClick={onClick}
+      >
+        <AddIcon />
+      </Button>
+    );
   }
 
   renderEditRowButtons(index) {
@@ -144,8 +159,24 @@ class TeamShow extends Component {
 
       buttons = (
         <div>
-          <button disabled={disabled ? 'disabled' : undefined} onClick={update}>Save</button>
-          <button disabled={disabled ? 'disabled' : undefined} onClick={reset}>Reset</button>
+          <Button
+            variant="flat"
+            color="primary"
+            aria-label="add"
+            disabled={disabled ? 'disabled' : undefined}
+            onClick={update}
+          >
+            <CheckCircleIcon />
+          </Button>
+          <Button
+            variant="flat"
+            color="primary"
+            aria-label="add"
+            disabled={disabled ? 'disabled' : undefined}
+            onClick={reset}
+          >
+            <CancelIcon />
+          </Button>
         </div>
       );
     } else {
@@ -162,8 +193,24 @@ class TeamShow extends Component {
       const del = () => this.del(index);
       buttons = (
         <div>
-          <button disabled={disabled ? 'disabled' : undefined} onClick={edit}>Edit</button>
-          <button disabled={disabled ? 'disabled' : undefined} onClick={del}>Delete</button>
+          <Button
+            variant="flat"
+            color="primary"
+            aria-label="add"
+            disabled={disabled ? 'disabled' : undefined}
+            onClick={edit}
+          >
+            <EditIcon />
+          </Button>
+          <Button
+            variant="flat"
+            color="primary"
+            aria-label="add"
+            disabled={disabled ? 'disabled' : undefined}
+            onClick={del}
+          >
+            <DeleteIcon />
+          </Button>
         </div>
       );
     }

@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import PropTypes, { instanceOf } from 'prop-types';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { withCookies, Cookies } from 'react-cookie';
-import { MuiThemeProvider, createMuiTheme } from 'material-ui-next/styles';
-import purple from 'material-ui-next/colors/blue';
-import grey from 'material-ui-next/colors/grey';
-import CssBaseline from 'material-ui-next/CssBaseline';
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import purple from 'material-ui/colors/blue';
+import grey from 'material-ui/colors/grey';
+import CssBaseline from 'material-ui/CssBaseline';
 import NoMatch from './NoMatch';
 import Root from './Root';
 import Privacy from './Privacy';
@@ -17,7 +17,7 @@ import NavBar from '../components/NavBar';
 import { getUser } from '../helpers/authentication';
 import { needsReauthorization } from '../helpers/version';
 
-// TODO: https://material-ui-next.com/guides/server-rendering/#server-rendering
+// TODO: https://material-ui.com/guides/server-rendering/#server-rendering
 const theme = createMuiTheme({
   palette: {
     primary: purple,
