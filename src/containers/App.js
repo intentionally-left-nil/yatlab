@@ -23,6 +23,9 @@ const theme = createMuiTheme({
     primary: purple,
     secondary: grey,
   },
+  typography: {
+    fontSize: 16,
+  },
 });
 
 class App extends Component {
