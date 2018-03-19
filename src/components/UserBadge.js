@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
-import { Link } from 'react-router-dom';
 import './UserBadge.css';
 
 class UserBadge extends PureComponent {
@@ -9,9 +8,11 @@ class UserBadge extends PureComponent {
     return (
       <div className="userBadge">
         <div className="name"> {`Hello, ${this.props.user.name}`} </div>
-        <Button variant="raised" color="primary" component={Link} to="/api/sign-out">
-          Sign Out
-        </Button>
+        <a href="/api/sign-out">
+          <Button variant="raised" color="primary" to="/api/sign-out">
+            Sign Out
+          </Button>
+        </a>
       </div>
     );
   }
