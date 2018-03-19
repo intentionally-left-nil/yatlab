@@ -63,12 +63,12 @@ class App extends Component {
           <Header user={user} />
           <div id="content">
             <Switch>
-              <Route path="/teams/new" component={TeamsNew} />
-              <Route path="/teams/reauthorize" component={TeamsReauthorize} />
-              <Route path="/teams/:id" render={this.renderTeamShow} />
-              <Route path="/privacy" component={Privacy} />
-              <Route path="/support" component={Support} />
-              <Route path="/" component={Root} />
+              <Route exact path="/teams/new" component={TeamsNew} />
+              <Route exact path="/teams/reauthorize" component={TeamsReauthorize} />
+              <Route exact path="/teams/:id" render={this.renderTeamShow} />
+              <Route exact path="/privacy" component={Privacy} />
+              <Route exact path="/support" component={Support} />
+              <Route exact path="/" component={Root} />
               <Route component={NoMatch} />
             </Switch>
           </div>
