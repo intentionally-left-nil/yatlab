@@ -2,25 +2,30 @@ import React, { Component } from 'react';
 import PropTypes, { instanceOf } from 'prop-types';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { withCookies, Cookies } from 'react-cookie';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import { deepOrange500 } from 'material-ui/styles/colors';
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import purple from 'material-ui/colors/blue';
+import grey from 'material-ui/colors/grey';
+import CssBaseline from 'material-ui/CssBaseline';
+import NoMatch from './NoMatch';
+import Root from './Root';
+import Privacy from './Privacy';
+import Support from './Support';
 import TeamsNew from './Teams#new';
 import TeamsReauthorize from './Teams#reauthorize';
 import TeamsShow from './Teams#show';
-import Header from '../components/Header';
-import Privacy from '../containers/Privacy';
-import Support from '../containers/Support';
-import NoMatch from '../components/NoMatch';
-import Root from '../components/Root';
+import NavBar from '../components/NavBar';
 import { getUser } from '../helpers/authentication';
 import { needsReauthorization } from '../helpers/version';
 
-const muiTheme = getMuiTheme({
+// TODO: https://material-ui.com/guides/server-rendering/#server-rendering
+const theme = createMuiTheme({
   palette: {
-    accent1Color: deepOrange500,
+    primary: purple,
+    secondary: grey,
   },
-  userAgent: 'all',
+  typography: {
+    fontSize: 16,
+  },
 });
 
 class App extends Component {
@@ -58,17 +63,18 @@ class App extends Component {
 
     const user = getUser(this.props.cookies);
     return (
-      <MuiThemeProvider muiTheme={muiTheme}>
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline />
         <div>
-          <Header user={user} />
+          <NavBar user={user} />
           <div id="content">
             <Switch>
-              <Route path="/teams/new" component={TeamsNew} />
-              <Route path="/teams/reauthorize" component={TeamsReauthorize} />
-              <Route path="/teams/:id" render={this.renderTeamShow} />
-              <Route path="/privacy" component={Privacy} />
-              <Route path="/support" component={Support} />
-              <Route path="/" component={Root} />
+              <Route exact path="/teams/new" component={TeamsNew} />
+              <Route exact path="/teams/reauthorize" component={TeamsReauthorize} />
+              <Route exact path="/teams/:id" render={this.renderTeamShow} />
+              <Route exact path="/privacy" component={Privacy} />
+              <Route exact path="/support" component={Support} />
+              <Route exact path="/" component={Root} />
               <Route component={NoMatch} />
             </Switch>
           </div>
