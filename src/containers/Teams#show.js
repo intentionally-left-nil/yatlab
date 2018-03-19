@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import apiFetch from '../helpers/apiFetch';
+import Title from '../components/Title';
 import './Teams#show.css';
 
 let tempId = 0;
@@ -223,7 +224,7 @@ class TeamShow extends Component {
 
     return (
       <div className="teamsShow">
-        <h1>{`Team ${this.props.team.name}`}</h1>
+        <Title>{`Team ${this.props.team.name}`}</Title>
         <ReactTable
           data={this.state.acronyms.toJS()}
           columns={columns}

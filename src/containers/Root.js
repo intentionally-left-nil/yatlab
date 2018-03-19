@@ -1,9 +1,10 @@
 import React from 'react';
 import Centered from '../components/Centered';
+import Title from '../components/Title';
 
 const Root = () => (
   <Centered>
-    <h1>Yatlab</h1>
+    <Title>Yatlab</Title>
     <div>
       Welcome to Yatlab! Yatlab is an acronym expander.
     </div>
