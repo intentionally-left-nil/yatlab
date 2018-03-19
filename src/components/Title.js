@@ -10,6 +10,4 @@ Title.propTypes = {
   children: node.isRequired,
 };
 
-
-
 export default Title;
