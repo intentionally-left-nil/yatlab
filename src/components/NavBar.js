@@ -16,7 +16,7 @@ const SignIn = () => {
   );
 };
 
-class Header extends PureComponent {
+class NavBar extends PureComponent {
   render() {
     return (
       <div id="header">
@@ -28,7 +28,7 @@ class Header extends PureComponent {
   }
 }
 
-Header.propTypes = {
+NavBar.propTypes = {
   user: PropTypes.shape({
     name: PropTypes.string,
     id: PropTypes.string,
@@ -36,9 +36,9 @@ Header.propTypes = {
   }),
 };
 
-Header.defaultProps = {
+NavBar.defaultProps = {
   user: null,
 };
 
 
-export default Header;
+export default NavBar;
