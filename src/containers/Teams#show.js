@@ -275,6 +275,12 @@ class TeamShow extends Component {
         <ReactTable
           data={this.state.acronyms.toJS()}
           columns={columns}
+          defaultSorted={[
+            {
+              id: 'name',
+              desc: true,
+            }
+          ]}
         />
       </div>
     );
