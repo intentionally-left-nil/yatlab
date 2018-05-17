@@ -9,7 +9,7 @@ class UserBadge extends PureComponent {
       <div className="userBadge">
         <div className="name"> {`Hello, ${this.props.user.name}`} </div>
         <a href="/api/sign-out">
-          <Button variant="raised" color="primary" to="/api/sign-out">
+          <Button disableRipple variant="raised" color="primary" to="/api/sign-out">
             Sign Out
           </Button>
         </a>

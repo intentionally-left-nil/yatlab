@@ -130,6 +130,7 @@ class TeamShow extends Component {
     const disabled = this.state.acronyms.getIn([index, 'meta', 'state']) === 'saving';
     return (
       <Button
+        disableRipple
         variant="flat"
         color="primary"
         aria-label="add"
@@ -160,6 +161,7 @@ class TeamShow extends Component {
       buttons = (
         <div>
           <Button
+            disableRipple
             variant="flat"
             color="primary"
             aria-label="add"
@@ -169,6 +171,7 @@ class TeamShow extends Component {
             <CheckCircleIcon />
           </Button>
           <Button
+            disableRipple
             variant="flat"
             color="secondary"
             aria-label="add"
@@ -194,6 +197,7 @@ class TeamShow extends Component {
       buttons = (
         <div>
           <Button
+            disableRipple
             variant="flat"
             color="secondary"
             aria-label="add"
@@ -203,6 +207,7 @@ class TeamShow extends Component {
             <EditIcon />
           </Button>
           <Button
+            disableRipple
             variant="flat"
             color="secondary"
             aria-label="add"
